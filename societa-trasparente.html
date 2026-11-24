@@ -57,14 +57,8 @@
             <div class="page-header" style="margin-left: -20px; margin-right: -20px; margin-top: -40px; text-align: left;">
                 <h1>Società Trasparente</h1>
             </div>
-            <p id="ultimo-controllo-tecnico"><strong>Ultimo controllo tecnico del sito:</strong> <time datetime="2026-11-24">24/11/2026</time>. <small>Il controllo tecnico non sostituisce la verifica dei dati aziendali.</small></p>
-            <div class="disclaimer-box" id="scadenza-revisione" data-revisione="2026-11-24">
-                <h3>Monitoraggio degli aggiornamenti</h3>
-                <p>Ultima revisione redazionale: <time datetime="2026-11-24">24/11/2026</time>.<br>
-                Prossima verifica programmata: <time id="prossima-verifica" datetime="2026-12-09">09/12/2026</time>.</p>
-                <p id="stato-revisione">Verifica periodica delle informazioni: ogni 15 giorni.</p>
-                <p><small>Il contatore indica il tempo fino alla prossima verifica programmata. La data di revisione viene modificata solo dopo un aggiornamento o un riesame documentato; non attesta la completezza dei dati aziendali o la conformità agli obblighi ASL.</small></p>
-            </div>
+            <p id="ultimo-controllo-tecnico"><strong>Ultimo controllo tecnico del sito:</strong> <time datetime="2026-11-24">24/11/2026</time>. &ndash; <span id="ultima-revisione-redazionale">Ultima revisione redazionale: <time datetime="2026-11-24">24/11/2026</time>.</span></p>
+            
             
             <div class="button-grid">
                 <a href="carta-dei-servizi.html" class="transparent-button"><span>📄</span> Carta dei Servizi</a>
@@ -82,7 +76,7 @@
                 <h3>Direzione, organizzazione e accreditamento</h3>
                 <p><strong>Riferimenti indicati nella Carta dei Servizi 2026 (rev. 00, 08/09/2026):</strong> legale rappresentante Maria Rosaria Sarnelli; direttore tecnico sanitario Dott. Francesco Giacca, specialista in Radiodiagnostica. La conferma delle nomine vigenti e del referente amministrativo è in corso.</p><p><strong>Accreditamento:</strong> l'accordo ASL Latina 2025–2026 richiama il DCA U00237 del 09/11/2012. Il perimetro di diagnostica per immagini riportato nella documentazione 2026 comprende RX tradizionale, MOC/DEXA ed ecografie internistiche. Il dettaglio delle singole prestazioni autorizzate, accreditate e contrattualizzate deve essere confermato in base ai titoli vigenti; eventuali ulteriori attività non sono qualificate qui come accreditate.</p><p><a href="https://www.ausl.latina.it/attachments/article/7232/LA%20MERIDIANA%202025-09-02T104434.328.pdf">Accordo ASL Latina 2025–2026</a></p>
                 <p>Documenti: <a href="organigramma.pdf">organigramma</a>, <a href="autorizzazioni.pdf">autorizzazioni</a> e <a href="accreditamento-ssr.pdf">documentazione di accreditamento</a>. Per informazioni e conferma dei referenti: <a href="tel:0771682946">0771 682946</a> · <a href="mailto:radiologiameridiana@gmail.com">radiologiameridiana@gmail.com</a> · PEC <a href="mailto:centrodiagnosticolameridiana@pec.it">centrodiagnosticolameridiana@pec.it</a>.</p>
-                <p>Ultima revisione informativa della pagina: 24/11/2026. La revisione della pagina non certifica la validità dei documenti allegati.</p>
+                <p>La revisione della pagina non certifica la validità dei documenti allegati.</p>
             </div>
             <div class="disclaimer-box" id="qualita">
                 <h3>Qualità e sicurezza delle cure</h3>
@@ -153,29 +147,6 @@
     });
 </script>
 
-<script>
-(function () {
-    const panel = document.getElementById('scadenza-revisione');
-    if (!panel) return;
-    const day = 86400000;
-    const start = Date.parse(panel.dataset.revisione + 'T00:00:00Z');
-    if (!Number.isFinite(start)) return;
-    const due = start + 15 * day;
-    const fmt = new Intl.DateTimeFormat('it-IT', {year:'numeric',month:'2-digit',day:'2-digit',timeZone:'UTC'});
-    const next = document.getElementById('prossima-verifica');
-    next.textContent = fmt.format(new Date(due));
-    next.dateTime = new Date(due).toISOString().slice(0,10);
-    function refresh() {
-        const parts = new Intl.DateTimeFormat('en-GB', {timeZone:'Europe/Rome',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
-        const p = Object.fromEntries(parts.map(x => [x.type,x.value]));
-        const today = Date.UTC(+p.year,+p.month-1,+p.day);
-        const left = Math.round((due-today)/day);
-        const out = document.getElementById('stato-revisione');
-        out.textContent = left > 0 ? 'Giorni alla prossima verifica: ' + left + ' su 15.' : left === 0 ? 'Verifica programmata per oggi.' : 'Verifica da effettuare: scadenza superata di ' + (-left) + ' giorni.';
-    }
-    refresh();
-    setInterval(refresh,60000);
-})();
-</script>
+
 </body>
 </html>
